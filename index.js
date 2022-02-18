@@ -47,11 +47,11 @@ app.use('/records', recordRoutes);// record routes
 
 //Nodemailer for pdf sending 
 const transporter = nodemailer.createTransport({
-    port : 587,
-    host : 'smtp.gmail.com',
+    port : process.env.SMTP_PORT,
+    host : process.env.SMTP_HOST,
     auth: {
-        user: 'nikhil16175@gmail.com',
-        pass: 'qjvjakavdgpknhgo'
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASS
     }
 });
 
