@@ -26,7 +26,7 @@ export const getProfile = async (req, res) => {
 export const createProfile = async (req, res) => {
     const {name, email,userId,  phoneNumber, buisnessName, buisnessAddress, logo, website} = req.body;
     try {
-        const profile = await Profile.findOne({email});
+        const profile = await Profile.findOne({email: email});
         if(profile){
             return res.status(400).json('profile already exists');
         }
@@ -80,6 +80,7 @@ export const deleteProfile = async (req, res) => {
 
 export const getProfileByUserId = async (req, res) => {
     const {searchQuery} = req.query;
+    console.log(searchQuery)
 
     try {
         const profile = await Profile.find({userId: searchQuery});
