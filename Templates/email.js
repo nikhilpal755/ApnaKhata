@@ -140,11 +140,11 @@ export default function ({dueDate, type , balanceDue , company, link, id}){
                 </div>
     
               <div class"footer">
-                  <a href="http://localhost:3000">
+                  <a href="https://https://apnakhata.netlify.app">
                   <img class="footer-logo" src="logo2.png" alt="logo-bnana-hai"/>
                 </a>
               </div>
-            <p style="text-align: center">Make beautiful invoice for free at apnakhata.com</p>
+            <p style="text-align: center">Make beautiful invoice for free at apnakhata.netlify.app</p>
             </div>
             </body>
         </html>`
