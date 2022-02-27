@@ -68,11 +68,11 @@ app.post('/send-pdf', (req,res) =>{
             if(err) return console.log(err);
 
             const mailOptions = {
-                from : `${company?.buisnessName ? company?.buisnessName : "ApnaKhata.com"} <Hello@ApnaKhata.com>`,// sender address
+                from : `${company?.buisnessName ? company?.buisnessName : "apnaKhata.netlify.app"} <Hello@apnakhata.netlify.app>`,// sender address
                 to : `${email}`,// list of receivers
                 replyTo : `${company?.email}`,
-                subject :  ` Record bill from ${company?.buisnessName ? company?.buisnessName : "ApnaKhata.com"}`,// Subject line
-                text : ` Record bill from ${company?.buisnessName ? company?.buisnessName : "ApnaKhata.com"}`,// plain text body
+                subject :  ` Record bill from ${company?.buisnessName ? company?.buisnessName : "apnakhata.netlify.app"}`,// Subject line
+                text : ` Record bill from ${company?.buisnessName ? company?.buisnessName : "apnakhata.netlify.app"}`,// plain text body
                 html : emailTemplate(req.body),
                 attachments : [
                     {
