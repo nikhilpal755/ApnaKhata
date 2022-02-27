@@ -132,19 +132,20 @@ export default function ({dueDate, type , balanceDue , company, link, id}){
                       <p style="font-size: 14px; padding: 20px">#${id}</p>
                       
                       <div class="address">
-                          <h2>${company?.businessName}</h2>
-                          <p>${company?.phoneNumber}</p>
-                          <p>${company?.website ? company?.website : ''}</p>
+                          <h2> ${ company?.buisnessName ? company.buisnessName : ''}</h2>
+                          <p>${company?.phoneNumber ? company.phoneNumber : ''}</p>
+                          <p>${company?.buisnessAddress ? company.buisnessAddress : ''}</p>
+                          <p>${company?.website ? company?.website : ''}</p>    
                           
                       </div>
                 </div>
     
               <div class"footer">
-                  <a href="https://https://apnakhata.netlify.app">
-                  <img class="footer-logo" src="logo2.png" alt="logo-bnana-hai"/>
+                <a href="https://apnakhata.netlify.app">
+                <img class="footer-logo" src="https://res.cloudinary.com/dcfg8797j/image/upload/v1645620219/logo2_drffga.png" alt="logo-bnana-hai"/>
                 </a>
               </div>
-            <p style="text-align: center">Make beautiful invoice for free at apnakhata.netlify.app</p>
+         
             </div>
             </body>
         </html>`
