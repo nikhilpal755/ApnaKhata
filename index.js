@@ -100,15 +100,11 @@ app.post('/send-pdf', (req,res) =>{
 // creating a pdf
 app.post('/create-pdf', (req ,res) =>{
     try{
-       pdf.create(pdfTemplate(req.body),{}).toFile('record.pdf', (err ,pdfFile ) => {
-            if (err) {
-                console.error(err);
-                res.status(500).json({ error: 'Error generating PDF' });
-              } else {
-                res.setHeader('Content-Type', 'application/pdf');
-                res.setHeader('Content-Disposition', 'attachment; filename=invoice.pdf');
-                res.status(200).send(pdfFile);
-              }
+       pdf.create(pdfTemplate(req.body),{}).toFile('record.pdf', (err ) => {
+            if(err) {
+                res.send(Promise.reject());
+            }
+            res.send(Promise.resolve());
         });
     }catch(err){
         console.log(err);
