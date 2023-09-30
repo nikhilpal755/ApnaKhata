@@ -28,7 +28,9 @@ const app = express();
 // --- Middleware -----
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors());
+app.use(cors({
+    origin: '*'
+}));
 app.use(morgan('common'));
 
 // --- conneting to mongodb -----
