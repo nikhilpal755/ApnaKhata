@@ -53,7 +53,6 @@ status, totalAmountReceived, balanceDue, company}){
         }
         .address {
             display: flex;
-            align-items: center;
             flex-direction: column;
             justify-content: space-between;
             padding: 10px 0px 15px 0px;
