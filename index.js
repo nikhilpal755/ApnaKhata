@@ -122,7 +122,8 @@ app.post('/create-pdf', async (req, res) => {
             format: 'A4',
             path: `${__dirname}/record.pdf`
         })
-
+        
+        res.json(Promise.resolve())
         // close the browser
         await browser.close()
     } catch (err) {
