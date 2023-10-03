@@ -56,45 +56,70 @@ const transporter = nodemailer.createTransport({
     }
 });
 
-const options = {
-    format: 'A4',
-}
+// const options = {
+//     format: 'A4',
+// }
 
 // sending pdf via email
 
-app.post('/send-pdf', (req, res) => {
+app.post('/send-pdf', async (req, res) => {
     const { email, company } = req.body;
     try {
-        pdf.create(pdfTemplate(req.body), options).toFile('record.pdf', (err) => {
-            if (err) return console.log(err);
+        // pdf.create(pdfTemplate(req.body), options).toFile('record.pdf', (err) => {
+        //     if (err) return console.log(err);
 
-            const mailOptions = {
-                from: `${company?.buisnessName ? company?.buisnessName : "apnaKhata.netlify.app"} <Hello@apnakhata.netlify.app>`,// sender address
-                to: `${email}`,// list of receivers
-                replyTo: `${company?.email}`,
-                subject: ` Record bill from ${company?.buisnessName ? company?.buisnessName : "apnakhata.netlify.app"}`,// Subject line
-                text: ` Record bill from ${company?.buisnessName ? company?.buisnessName : "apnakhata.netlify.app"}`,// plain text body
-                html: emailTemplate(req.body),
-                attachments: [
-                    {
-                        filename: 'record.pdf',
-                        path: `${__dirname}/record.pdf`
-                    }
-                ]
+        // launch a new chrome instance
+        const browser = await puppeteer.launch({
+            headless: true
+        })
 
-            }
+        // create a new page
+        const page = await browser.newPage()
 
-            transporter.sendMail(mailOptions, (err, info) => {
-                if (err) {
-                    console.log(err);
+        // set your html as the pages content
+        const html = pdfTemplate(req.body);
+        // console.log("type of html -> ", typeof(html))
+        // console.log("html page -> ", html)
+        await page.setContent(html, {
+            waitUntil: 'domcontentloaded'
+        })
+
+        // or a .pdf file
+        await page.pdf({
+            format: 'A4',
+            path: `${__dirname}/record.pdf`
+        })
+
+        const mailOptions = {
+            from: `${company?.buisnessName ? company?.buisnessName : "apnaKhata.netlify.app"} <Hello@apnakhata.netlify.app>`,// sender address
+            to: `${email}`,// list of receivers
+            replyTo: `${company?.email}`,
+            subject: ` Record bill from ${company?.buisnessName ? company?.buisnessName : "apnakhata.netlify.app"}`,// Subject line
+            text: ` Record bill from ${company?.buisnessName ? company?.buisnessName : "apnakhata.netlify.app"}`,// plain text body
+            html: emailTemplate(req.body),
+            attachments: [
+                {
+                    filename: 'record.pdf',
+                    path: `${__dirname}/record.pdf`
                 }
-                console.log('Message sent: %s', info);
-            })
-            res.status(200).json({ message: 'Email sent' });
+            ]
 
-        });
+        }
+
+        transporter.sendMail(mailOptions, (err, info) => {
+            if (err) {
+                console.log(err);
+            }
+            console.log('Message sent: %s', info);
+        })
+        res.status(200).json({ message: 'Email sent' });
+        // close the browser
+        await browser.close()
+
+
     } catch (err) {
         console.log(err);
+        res.status(500).json(`Internal Server Error - ${err}`)
     }
 })
 
@@ -122,7 +147,7 @@ app.post('/create-pdf', async (req, res) => {
             format: 'A4',
             path: `${__dirname}/record.pdf`
         })
-        
+
         res.json(Promise.resolve())
         // close the browser
         await browser.close()
